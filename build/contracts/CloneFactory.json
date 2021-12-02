@@ -1,0 +1,2139 @@
+{
+  "contractName": "CloneFactory",
+  "abi": [],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.10+commit.fc410830\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/CloneFactory.sol\":\"CloneFactory\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/CloneFactory.sol\":{\"keccak256\":\"0x2bbd6734eb3f124f716a487ba5803338f6589df792a2967f395af33d08b9a728\",\"urls\":[\"bzz-raw://15ab708b719f9871f498d356599d0d8fb5b18f9000ac3c4190b8bc9bedc88fb4\",\"dweb:/ipfs/QmPYBFTTCDQu2XfUzCZkRnv3EZX9Dw5MAXacGX65sqKBcQ\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea2646970667358221220231b7fa566c45b5f773b4830f13f7c933cb0ae966af3bb166879703f9c25df1864736f6c634300080a0033",
+  "deployedBytecode": "0x6080604052600080fdfea2646970667358221220231b7fa566c45b5f773b4830f13f7c933cb0ae966af3bb166879703f9c25df1864736f6c634300080a0033",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "1200:1094:0:-:0;;;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "1200:1094:0:-:0;;;;;",
+  "source": "pragma solidity >=0.8.10 <0.9.0;\n\n/*\nThe MIT License (MIT)\n\nCopyright (c) 2018 Murray Software, LLC.\n\nPermission is hereby granted, free of charge, to any person obtaining\na copy of this software and associated documentation files (the\n\"Software\"), to deal in the Software without restriction, including\nwithout limitation the rights to use, copy, modify, merge, publish,\ndistribute, sublicense, and/or sell copies of the Software, and to\npermit persons to whom the Software is furnished to do so, subject to\nthe following conditions:\n\nThe above copyright notice and this permission notice shall be included\nin all copies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS\nOR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\nMERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.\nIN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY\nCLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,\nTORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE\nSOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n*/\n//solhint-disable max-line-length\n//solhint-disable no-inline-assembly\n\ncontract CloneFactory {\n\n  function createClone(address target) internal returns (address result) {\n    bytes20 targetBytes = bytes20(target);\n    assembly {\n      let clone := mload(0x40)\n      mstore(clone, 0x3d602d80600a3d3981f3363d3d373d3d3d363d73000000000000000000000000)\n      mstore(add(clone, 0x14), targetBytes)\n      mstore(add(clone, 0x28), 0x5af43d82803e903d91602b57fd5bf30000000000000000000000000000000000)\n      result := create(0, clone, 0x37)\n    }\n  }\n\n  function isClone(address target, address query) internal view returns (bool result) {\n    bytes20 targetBytes = bytes20(target);\n    assembly {\n      let clone := mload(0x40)\n      mstore(clone, 0x363d3d373d3d3d363d7300000000000000000000000000000000000000000000)\n      mstore(add(clone, 0xa), targetBytes)\n      mstore(add(clone, 0x1e), 0x5af43d82803e903d91602b57fd5bf30000000000000000000000000000000000)\n\n      let other := add(clone, 0x40)\n      extcodecopy(query, other, 0, 0x2d)\n      result := and(\n        eq(mload(clone), mload(other)),\n        eq(mload(add(clone, 0xd)), mload(add(other, 0xd)))\n      )\n    }\n  }\n}",
+  "sourcePath": "/Users/maxencealvarez/Desktop/Blockchain/Test/contracts/CloneFactory.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/CloneFactory.sol",
+    "exportedSymbols": {
+      "CloneFactory": [
+        36
+      ]
+    },
+    "id": 37,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.8",
+          ".10",
+          "<",
+          "0.9",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:32:0"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "CloneFactory",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 36,
+        "linearizedBaseContracts": [
+          36
+        ],
+        "name": "CloneFactory",
+        "nameLocation": "1209:12:0",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 16,
+              "nodeType": "Block",
+              "src": "1298:370:0",
+              "statements": [
+                {
+                  "assignments": [
+                    9
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 9,
+                      "mutability": "mutable",
+                      "name": "targetBytes",
+                      "nameLocation": "1312:11:0",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 16,
+                      "src": "1304:19:0",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes20",
+                        "typeString": "bytes20"
+                      },
+                      "typeName": {
+                        "id": 8,
+                        "name": "bytes20",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "1304:7:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes20",
+                          "typeString": "bytes20"
+                        }
+                      },
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 14,
+                  "initialValue": {
+                    "arguments": [
+                      {
+                        "id": 12,
+                        "name": "target",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 3,
+                        "src": "1334:6:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      ],
+                      "id": 11,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "lValueRequested": false,
+                      "nodeType": "ElementaryTypeNameExpression",
+                      "src": "1326:7:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_type$_t_bytes20_$",
+                        "typeString": "type(bytes20)"
+                      },
+                      "typeName": {
+                        "id": 10,
+                        "name": "bytes20",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "1326:7:0",
+                        "typeDescriptions": {}
+                      }
+                    },
+                    "id": 13,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "typeConversion",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1326:15:0",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes20",
+                      "typeString": "bytes20"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1304:37:0"
+                },
+                {
+                  "AST": {
+                    "nodeType": "YulBlock",
+                    "src": "1356:308:0",
+                    "statements": [
+                      {
+                        "nodeType": "YulVariableDeclaration",
+                        "src": "1364:24:0",
+                        "value": {
+                          "arguments": [
+                            {
+                              "kind": "number",
+                              "nodeType": "YulLiteral",
+                              "src": "1383:4:0",
+                              "type": "",
+                              "value": "0x40"
+                            }
+                          ],
+                          "functionName": {
+                            "name": "mload",
+                            "nodeType": "YulIdentifier",
+                            "src": "1377:5:0"
+                          },
+                          "nodeType": "YulFunctionCall",
+                          "src": "1377:11:0"
+                        },
+                        "variables": [
+                          {
+                            "name": "clone",
+                            "nodeType": "YulTypedName",
+                            "src": "1368:5:0",
+                            "type": ""
+                          }
+                        ]
+                      },
+                      {
+                        "expression": {
+                          "arguments": [
+                            {
+                              "name": "clone",
+                              "nodeType": "YulIdentifier",
+                              "src": "1402:5:0"
+                            },
+                            {
+                              "kind": "number",
+                              "nodeType": "YulLiteral",
+                              "src": "1409:66:0",
+                              "type": "",
+                              "value": "0x3d602d80600a3d3981f3363d3d373d3d3d363d73000000000000000000000000"
+                            }
+                          ],
+                          "functionName": {
+                            "name": "mstore",
+                            "nodeType": "YulIdentifier",
+                            "src": "1395:6:0"
+                          },
+                          "nodeType": "YulFunctionCall",
+                          "src": "1395:81:0"
+                        },
+                        "nodeType": "YulExpressionStatement",
+                        "src": "1395:81:0"
+                      },
+                      {
+                        "expression": {
+                          "arguments": [
+                            {
+                              "arguments": [
+                                {
+                                  "name": "clone",
+                                  "nodeType": "YulIdentifier",
+                                  "src": "1494:5:0"
+                                },
+                                {
+                                  "kind": "number",
+                                  "nodeType": "YulLiteral",
+                                  "src": "1501:4:0",
+                                  "type": "",
+                                  "value": "0x14"
+                                }
+                              ],
+                              "functionName": {
+                                "name": "add",
+                                "nodeType": "YulIdentifier",
+                                "src": "1490:3:0"
+                              },
+                              "nodeType": "YulFunctionCall",
+                              "src": "1490:16:0"
+                            },
+                            {
+                              "name": "targetBytes",
+                              "nodeType": "YulIdentifier",
+                              "src": "1508:11:0"
+                            }
+                          ],
+                          "functionName": {
+                            "name": "mstore",
+                            "nodeType": "YulIdentifier",
+                            "src": "1483:6:0"
+                          },
+                          "nodeType": "YulFunctionCall",
+                          "src": "1483:37:0"
+                        },
+                        "nodeType": "YulExpressionStatement",
+                        "src": "1483:37:0"
+                      },
+                      {
+                        "expression": {
+                          "arguments": [
+                            {
+                              "arguments": [
+                                {
+                                  "name": "clone",
+                                  "nodeType": "YulIdentifier",
+                                  "src": "1538:5:0"
+                                },
+                                {
+                                  "kind": "number",
+                                  "nodeType": "YulLiteral",
+                                  "src": "1545:4:0",
+                                  "type": "",
+                                  "value": "0x28"
+                                }
+                              ],
+                              "functionName": {
+                                "name": "add",
+                                "nodeType": "YulIdentifier",
+                                "src": "1534:3:0"
+                              },
+                              "nodeType": "YulFunctionCall",
+                              "src": "1534:16:0"
+                            },
+                            {
+                              "kind": "number",
+                              "nodeType": "YulLiteral",
+                              "src": "1552:66:0",
+                              "type": "",
+                              "value": "0x5af43d82803e903d91602b57fd5bf30000000000000000000000000000000000"
+                            }
+                          ],
+                          "functionName": {
+                            "name": "mstore",
+                            "nodeType": "YulIdentifier",
+                            "src": "1527:6:0"
+                          },
+                          "nodeType": "YulFunctionCall",
+                          "src": "1527:92:0"
+                        },
+                        "nodeType": "YulExpressionStatement",
+                        "src": "1527:92:0"
+                      },
+                      {
+                        "nodeType": "YulAssignment",
+                        "src": "1626:32:0",
+                        "value": {
+                          "arguments": [
+                            {
+                              "kind": "number",
+                              "nodeType": "YulLiteral",
+                              "src": "1643:1:0",
+                              "type": "",
+                              "value": "0"
+                            },
+                            {
+                              "name": "clone",
+                              "nodeType": "YulIdentifier",
+                              "src": "1646:5:0"
+                            },
+                            {
+                              "kind": "number",
+                              "nodeType": "YulLiteral",
+                              "src": "1653:4:0",
+                              "type": "",
+                              "value": "0x37"
+                            }
+                          ],
+                          "functionName": {
+                            "name": "create",
+                            "nodeType": "YulIdentifier",
+                            "src": "1636:6:0"
+                          },
+                          "nodeType": "YulFunctionCall",
+                          "src": "1636:22:0"
+                        },
+                        "variableNames": [
+                          {
+                            "name": "result",
+                            "nodeType": "YulIdentifier",
+                            "src": "1626:6:0"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "evmVersion": "london",
+                  "externalReferences": [
+                    {
+                      "declaration": 6,
+                      "isOffset": false,
+                      "isSlot": false,
+                      "src": "1626:6:0",
+                      "valueSize": 1
+                    },
+                    {
+                      "declaration": 9,
+                      "isOffset": false,
+                      "isSlot": false,
+                      "src": "1508:11:0",
+                      "valueSize": 1
+                    }
+                  ],
+                  "id": 15,
+                  "nodeType": "InlineAssembly",
+                  "src": "1347:317:0"
+                }
+              ]
+            },
+            "id": 17,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "createClone",
+            "nameLocation": "1236:11:0",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 4,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3,
+                  "mutability": "mutable",
+                  "name": "target",
+                  "nameLocation": "1256:6:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 17,
+                  "src": "1248:14:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 2,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1248:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1247:16:0"
+            },
+            "returnParameters": {
+              "id": 7,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 6,
+                  "mutability": "mutable",
+                  "name": "result",
+                  "nameLocation": "1290:6:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 17,
+                  "src": "1282:14:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 5,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1282:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1281:16:0"
+            },
+            "scope": 36,
+            "src": "1227:441:0",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 34,
+              "nodeType": "Block",
+              "src": "1756:536:0",
+              "statements": [
+                {
+                  "assignments": [
+                    27
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 27,
+                      "mutability": "mutable",
+                      "name": "targetBytes",
+                      "nameLocation": "1770:11:0",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 34,
+                      "src": "1762:19:0",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes20",
+                        "typeString": "bytes20"
+                      },
+                      "typeName": {
+                        "id": 26,
+                        "name": "bytes20",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "1762:7:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes20",
+                          "typeString": "bytes20"
+                        }
+                      },
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 32,
+                  "initialValue": {
+                    "arguments": [
+                      {
+                        "id": 30,
+                        "name": "target",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 19,
+                        "src": "1792:6:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      ],
+                      "id": 29,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "lValueRequested": false,
+                      "nodeType": "ElementaryTypeNameExpression",
+                      "src": "1784:7:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_type$_t_bytes20_$",
+                        "typeString": "type(bytes20)"
+                      },
+                      "typeName": {
+                        "id": 28,
+                        "name": "bytes20",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "1784:7:0",
+                        "typeDescriptions": {}
+                      }
+                    },
+                    "id": 31,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "typeConversion",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1784:15:0",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes20",
+                      "typeString": "bytes20"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1762:37:0"
+                },
+                {
+                  "AST": {
+                    "nodeType": "YulBlock",
+                    "src": "1814:474:0",
+                    "statements": [
+                      {
+                        "nodeType": "YulVariableDeclaration",
+                        "src": "1822:24:0",
+                        "value": {
+                          "arguments": [
+                            {
+                              "kind": "number",
+                              "nodeType": "YulLiteral",
+                              "src": "1841:4:0",
+                              "type": "",
+                              "value": "0x40"
+                            }
+                          ],
+                          "functionName": {
+                            "name": "mload",
+                            "nodeType": "YulIdentifier",
+                            "src": "1835:5:0"
+                          },
+                          "nodeType": "YulFunctionCall",
+                          "src": "1835:11:0"
+                        },
+                        "variables": [
+                          {
+                            "name": "clone",
+                            "nodeType": "YulTypedName",
+                            "src": "1826:5:0",
+                            "type": ""
+                          }
+                        ]
+                      },
+                      {
+                        "expression": {
+                          "arguments": [
+                            {
+                              "name": "clone",
+                              "nodeType": "YulIdentifier",
+                              "src": "1860:5:0"
+                            },
+                            {
+                              "kind": "number",
+                              "nodeType": "YulLiteral",
+                              "src": "1867:66:0",
+                              "type": "",
+                              "value": "0x363d3d373d3d3d363d7300000000000000000000000000000000000000000000"
+                            }
+                          ],
+                          "functionName": {
+                            "name": "mstore",
+                            "nodeType": "YulIdentifier",
+                            "src": "1853:6:0"
+                          },
+                          "nodeType": "YulFunctionCall",
+                          "src": "1853:81:0"
+                        },
+                        "nodeType": "YulExpressionStatement",
+                        "src": "1853:81:0"
+                      },
+                      {
+                        "expression": {
+                          "arguments": [
+                            {
+                              "arguments": [
+                                {
+                                  "name": "clone",
+                                  "nodeType": "YulIdentifier",
+                                  "src": "1952:5:0"
+                                },
+                                {
+                                  "kind": "number",
+                                  "nodeType": "YulLiteral",
+                                  "src": "1959:3:0",
+                                  "type": "",
+                                  "value": "0xa"
+                                }
+                              ],
+                              "functionName": {
+                                "name": "add",
+                                "nodeType": "YulIdentifier",
+                                "src": "1948:3:0"
+                              },
+                              "nodeType": "YulFunctionCall",
+                              "src": "1948:15:0"
+                            },
+                            {
+                              "name": "targetBytes",
+                              "nodeType": "YulIdentifier",
+                              "src": "1965:11:0"
+                            }
+                          ],
+                          "functionName": {
+                            "name": "mstore",
+                            "nodeType": "YulIdentifier",
+                            "src": "1941:6:0"
+                          },
+                          "nodeType": "YulFunctionCall",
+                          "src": "1941:36:0"
+                        },
+                        "nodeType": "YulExpressionStatement",
+                        "src": "1941:36:0"
+                      },
+                      {
+                        "expression": {
+                          "arguments": [
+                            {
+                              "arguments": [
+                                {
+                                  "name": "clone",
+                                  "nodeType": "YulIdentifier",
+                                  "src": "1995:5:0"
+                                },
+                                {
+                                  "kind": "number",
+                                  "nodeType": "YulLiteral",
+                                  "src": "2002:4:0",
+                                  "type": "",
+                                  "value": "0x1e"
+                                }
+                              ],
+                              "functionName": {
+                                "name": "add",
+                                "nodeType": "YulIdentifier",
+                                "src": "1991:3:0"
+                              },
+                              "nodeType": "YulFunctionCall",
+                              "src": "1991:16:0"
+                            },
+                            {
+                              "kind": "number",
+                              "nodeType": "YulLiteral",
+                              "src": "2009:66:0",
+                              "type": "",
+                              "value": "0x5af43d82803e903d91602b57fd5bf30000000000000000000000000000000000"
+                            }
+                          ],
+                          "functionName": {
+                            "name": "mstore",
+                            "nodeType": "YulIdentifier",
+                            "src": "1984:6:0"
+                          },
+                          "nodeType": "YulFunctionCall",
+                          "src": "1984:92:0"
+                        },
+                        "nodeType": "YulExpressionStatement",
+                        "src": "1984:92:0"
+                      },
+                      {
+                        "nodeType": "YulVariableDeclaration",
+                        "src": "2084:29:0",
+                        "value": {
+                          "arguments": [
+                            {
+                              "name": "clone",
+                              "nodeType": "YulIdentifier",
+                              "src": "2101:5:0"
+                            },
+                            {
+                              "kind": "number",
+                              "nodeType": "YulLiteral",
+                              "src": "2108:4:0",
+                              "type": "",
+                              "value": "0x40"
+                            }
+                          ],
+                          "functionName": {
+                            "name": "add",
+                            "nodeType": "YulIdentifier",
+                            "src": "2097:3:0"
+                          },
+                          "nodeType": "YulFunctionCall",
+                          "src": "2097:16:0"
+                        },
+                        "variables": [
+                          {
+                            "name": "other",
+                            "nodeType": "YulTypedName",
+                            "src": "2088:5:0",
+                            "type": ""
+                          }
+                        ]
+                      },
+                      {
+                        "expression": {
+                          "arguments": [
+                            {
+                              "name": "query",
+                              "nodeType": "YulIdentifier",
+                              "src": "2132:5:0"
+                            },
+                            {
+                              "name": "other",
+                              "nodeType": "YulIdentifier",
+                              "src": "2139:5:0"
+                            },
+                            {
+                              "kind": "number",
+                              "nodeType": "YulLiteral",
+                              "src": "2146:1:0",
+                              "type": "",
+                              "value": "0"
+                            },
+                            {
+                              "kind": "number",
+                              "nodeType": "YulLiteral",
+                              "src": "2149:4:0",
+                              "type": "",
+                              "value": "0x2d"
+                            }
+                          ],
+                          "functionName": {
+                            "name": "extcodecopy",
+                            "nodeType": "YulIdentifier",
+                            "src": "2120:11:0"
+                          },
+                          "nodeType": "YulFunctionCall",
+                          "src": "2120:34:0"
+                        },
+                        "nodeType": "YulExpressionStatement",
+                        "src": "2120:34:0"
+                      },
+                      {
+                        "nodeType": "YulAssignment",
+                        "src": "2161:121:0",
+                        "value": {
+                          "arguments": [
+                            {
+                              "arguments": [
+                                {
+                                  "arguments": [
+                                    {
+                                      "name": "clone",
+                                      "nodeType": "YulIdentifier",
+                                      "src": "2193:5:0"
+                                    }
+                                  ],
+                                  "functionName": {
+                                    "name": "mload",
+                                    "nodeType": "YulIdentifier",
+                                    "src": "2187:5:0"
+                                  },
+                                  "nodeType": "YulFunctionCall",
+                                  "src": "2187:12:0"
+                                },
+                                {
+                                  "arguments": [
+                                    {
+                                      "name": "other",
+                                      "nodeType": "YulIdentifier",
+                                      "src": "2207:5:0"
+                                    }
+                                  ],
+                                  "functionName": {
+                                    "name": "mload",
+                                    "nodeType": "YulIdentifier",
+                                    "src": "2201:5:0"
+                                  },
+                                  "nodeType": "YulFunctionCall",
+                                  "src": "2201:12:0"
+                                }
+                              ],
+                              "functionName": {
+                                "name": "eq",
+                                "nodeType": "YulIdentifier",
+                                "src": "2184:2:0"
+                              },
+                              "nodeType": "YulFunctionCall",
+                              "src": "2184:30:0"
+                            },
+                            {
+                              "arguments": [
+                                {
+                                  "arguments": [
+                                    {
+                                      "arguments": [
+                                        {
+                                          "name": "clone",
+                                          "nodeType": "YulIdentifier",
+                                          "src": "2237:5:0"
+                                        },
+                                        {
+                                          "kind": "number",
+                                          "nodeType": "YulLiteral",
+                                          "src": "2244:3:0",
+                                          "type": "",
+                                          "value": "0xd"
+                                        }
+                                      ],
+                                      "functionName": {
+                                        "name": "add",
+                                        "nodeType": "YulIdentifier",
+                                        "src": "2233:3:0"
+                                      },
+                                      "nodeType": "YulFunctionCall",
+                                      "src": "2233:15:0"
+                                    }
+                                  ],
+                                  "functionName": {
+                                    "name": "mload",
+                                    "nodeType": "YulIdentifier",
+                                    "src": "2227:5:0"
+                                  },
+                                  "nodeType": "YulFunctionCall",
+                                  "src": "2227:22:0"
+                                },
+                                {
+                                  "arguments": [
+                                    {
+                                      "arguments": [
+                                        {
+                                          "name": "other",
+                                          "nodeType": "YulIdentifier",
+                                          "src": "2261:5:0"
+                                        },
+                                        {
+                                          "kind": "number",
+                                          "nodeType": "YulLiteral",
+                                          "src": "2268:3:0",
+                                          "type": "",
+                                          "value": "0xd"
+                                        }
+                                      ],
+                                      "functionName": {
+                                        "name": "add",
+                                        "nodeType": "YulIdentifier",
+                                        "src": "2257:3:0"
+                                      },
+                                      "nodeType": "YulFunctionCall",
+                                      "src": "2257:15:0"
+                                    }
+                                  ],
+                                  "functionName": {
+                                    "name": "mload",
+                                    "nodeType": "YulIdentifier",
+                                    "src": "2251:5:0"
+                                  },
+                                  "nodeType": "YulFunctionCall",
+                                  "src": "2251:22:0"
+                                }
+                              ],
+                              "functionName": {
+                                "name": "eq",
+                                "nodeType": "YulIdentifier",
+                                "src": "2224:2:0"
+                              },
+                              "nodeType": "YulFunctionCall",
+                              "src": "2224:50:0"
+                            }
+                          ],
+                          "functionName": {
+                            "name": "and",
+                            "nodeType": "YulIdentifier",
+                            "src": "2171:3:0"
+                          },
+                          "nodeType": "YulFunctionCall",
+                          "src": "2171:111:0"
+                        },
+                        "variableNames": [
+                          {
+                            "name": "result",
+                            "nodeType": "YulIdentifier",
+                            "src": "2161:6:0"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "evmVersion": "london",
+                  "externalReferences": [
+                    {
+                      "declaration": 21,
+                      "isOffset": false,
+                      "isSlot": false,
+                      "src": "2132:5:0",
+                      "valueSize": 1
+                    },
+                    {
+                      "declaration": 24,
+                      "isOffset": false,
+                      "isSlot": false,
+                      "src": "2161:6:0",
+                      "valueSize": 1
+                    },
+                    {
+                      "declaration": 27,
+                      "isOffset": false,
+                      "isSlot": false,
+                      "src": "1965:11:0",
+                      "valueSize": 1
+                    }
+                  ],
+                  "id": 33,
+                  "nodeType": "InlineAssembly",
+                  "src": "1805:483:0"
+                }
+              ]
+            },
+            "id": 35,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "isClone",
+            "nameLocation": "1681:7:0",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 22,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 19,
+                  "mutability": "mutable",
+                  "name": "target",
+                  "nameLocation": "1697:6:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 35,
+                  "src": "1689:14:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 18,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1689:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 21,
+                  "mutability": "mutable",
+                  "name": "query",
+                  "nameLocation": "1713:5:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 35,
+                  "src": "1705:13:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 20,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1705:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1688:31:0"
+            },
+            "returnParameters": {
+              "id": 25,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 24,
+                  "mutability": "mutable",
+                  "name": "result",
+                  "nameLocation": "1748:6:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 35,
+                  "src": "1743:11:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 23,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1743:4:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1742:13:0"
+            },
+            "scope": 36,
+            "src": "1672:620:0",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "internal"
+          }
+        ],
+        "scope": 37,
+        "src": "1200:1094:0",
+        "usedErrors": []
+      }
+    ],
+    "src": "0:2294:0"
+  },
+  "legacyAST": {
+    "absolutePath": "project:/contracts/CloneFactory.sol",
+    "exportedSymbols": {
+      "CloneFactory": [
+        36
+      ]
+    },
+    "id": 37,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.8",
+          ".10",
+          "<",
+          "0.9",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:32:0"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "CloneFactory",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 36,
+        "linearizedBaseContracts": [
+          36
+        ],
+        "name": "CloneFactory",
+        "nameLocation": "1209:12:0",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 16,
+              "nodeType": "Block",
+              "src": "1298:370:0",
+              "statements": [
+                {
+                  "assignments": [
+                    9
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 9,
+                      "mutability": "mutable",
+                      "name": "targetBytes",
+                      "nameLocation": "1312:11:0",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 16,
+                      "src": "1304:19:0",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes20",
+                        "typeString": "bytes20"
+                      },
+                      "typeName": {
+                        "id": 8,
+                        "name": "bytes20",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "1304:7:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes20",
+                          "typeString": "bytes20"
+                        }
+                      },
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 14,
+                  "initialValue": {
+                    "arguments": [
+                      {
+                        "id": 12,
+                        "name": "target",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 3,
+                        "src": "1334:6:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      ],
+                      "id": 11,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "lValueRequested": false,
+                      "nodeType": "ElementaryTypeNameExpression",
+                      "src": "1326:7:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_type$_t_bytes20_$",
+                        "typeString": "type(bytes20)"
+                      },
+                      "typeName": {
+                        "id": 10,
+                        "name": "bytes20",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "1326:7:0",
+                        "typeDescriptions": {}
+                      }
+                    },
+                    "id": 13,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "typeConversion",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1326:15:0",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes20",
+                      "typeString": "bytes20"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1304:37:0"
+                },
+                {
+                  "AST": {
+                    "nodeType": "YulBlock",
+                    "src": "1356:308:0",
+                    "statements": [
+                      {
+                        "nodeType": "YulVariableDeclaration",
+                        "src": "1364:24:0",
+                        "value": {
+                          "arguments": [
+                            {
+                              "kind": "number",
+                              "nodeType": "YulLiteral",
+                              "src": "1383:4:0",
+                              "type": "",
+                              "value": "0x40"
+                            }
+                          ],
+                          "functionName": {
+                            "name": "mload",
+                            "nodeType": "YulIdentifier",
+                            "src": "1377:5:0"
+                          },
+                          "nodeType": "YulFunctionCall",
+                          "src": "1377:11:0"
+                        },
+                        "variables": [
+                          {
+                            "name": "clone",
+                            "nodeType": "YulTypedName",
+                            "src": "1368:5:0",
+                            "type": ""
+                          }
+                        ]
+                      },
+                      {
+                        "expression": {
+                          "arguments": [
+                            {
+                              "name": "clone",
+                              "nodeType": "YulIdentifier",
+                              "src": "1402:5:0"
+                            },
+                            {
+                              "kind": "number",
+                              "nodeType": "YulLiteral",
+                              "src": "1409:66:0",
+                              "type": "",
+                              "value": "0x3d602d80600a3d3981f3363d3d373d3d3d363d73000000000000000000000000"
+                            }
+                          ],
+                          "functionName": {
+                            "name": "mstore",
+                            "nodeType": "YulIdentifier",
+                            "src": "1395:6:0"
+                          },
+                          "nodeType": "YulFunctionCall",
+                          "src": "1395:81:0"
+                        },
+                        "nodeType": "YulExpressionStatement",
+                        "src": "1395:81:0"
+                      },
+                      {
+                        "expression": {
+                          "arguments": [
+                            {
+                              "arguments": [
+                                {
+                                  "name": "clone",
+                                  "nodeType": "YulIdentifier",
+                                  "src": "1494:5:0"
+                                },
+                                {
+                                  "kind": "number",
+                                  "nodeType": "YulLiteral",
+                                  "src": "1501:4:0",
+                                  "type": "",
+                                  "value": "0x14"
+                                }
+                              ],
+                              "functionName": {
+                                "name": "add",
+                                "nodeType": "YulIdentifier",
+                                "src": "1490:3:0"
+                              },
+                              "nodeType": "YulFunctionCall",
+                              "src": "1490:16:0"
+                            },
+                            {
+                              "name": "targetBytes",
+                              "nodeType": "YulIdentifier",
+                              "src": "1508:11:0"
+                            }
+                          ],
+                          "functionName": {
+                            "name": "mstore",
+                            "nodeType": "YulIdentifier",
+                            "src": "1483:6:0"
+                          },
+                          "nodeType": "YulFunctionCall",
+                          "src": "1483:37:0"
+                        },
+                        "nodeType": "YulExpressionStatement",
+                        "src": "1483:37:0"
+                      },
+                      {
+                        "expression": {
+                          "arguments": [
+                            {
+                              "arguments": [
+                                {
+                                  "name": "clone",
+                                  "nodeType": "YulIdentifier",
+                                  "src": "1538:5:0"
+                                },
+                                {
+                                  "kind": "number",
+                                  "nodeType": "YulLiteral",
+                                  "src": "1545:4:0",
+                                  "type": "",
+                                  "value": "0x28"
+                                }
+                              ],
+                              "functionName": {
+                                "name": "add",
+                                "nodeType": "YulIdentifier",
+                                "src": "1534:3:0"
+                              },
+                              "nodeType": "YulFunctionCall",
+                              "src": "1534:16:0"
+                            },
+                            {
+                              "kind": "number",
+                              "nodeType": "YulLiteral",
+                              "src": "1552:66:0",
+                              "type": "",
+                              "value": "0x5af43d82803e903d91602b57fd5bf30000000000000000000000000000000000"
+                            }
+                          ],
+                          "functionName": {
+                            "name": "mstore",
+                            "nodeType": "YulIdentifier",
+                            "src": "1527:6:0"
+                          },
+                          "nodeType": "YulFunctionCall",
+                          "src": "1527:92:0"
+                        },
+                        "nodeType": "YulExpressionStatement",
+                        "src": "1527:92:0"
+                      },
+                      {
+                        "nodeType": "YulAssignment",
+                        "src": "1626:32:0",
+                        "value": {
+                          "arguments": [
+                            {
+                              "kind": "number",
+                              "nodeType": "YulLiteral",
+                              "src": "1643:1:0",
+                              "type": "",
+                              "value": "0"
+                            },
+                            {
+                              "name": "clone",
+                              "nodeType": "YulIdentifier",
+                              "src": "1646:5:0"
+                            },
+                            {
+                              "kind": "number",
+                              "nodeType": "YulLiteral",
+                              "src": "1653:4:0",
+                              "type": "",
+                              "value": "0x37"
+                            }
+                          ],
+                          "functionName": {
+                            "name": "create",
+                            "nodeType": "YulIdentifier",
+                            "src": "1636:6:0"
+                          },
+                          "nodeType": "YulFunctionCall",
+                          "src": "1636:22:0"
+                        },
+                        "variableNames": [
+                          {
+                            "name": "result",
+                            "nodeType": "YulIdentifier",
+                            "src": "1626:6:0"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "evmVersion": "london",
+                  "externalReferences": [
+                    {
+                      "declaration": 6,
+                      "isOffset": false,
+                      "isSlot": false,
+                      "src": "1626:6:0",
+                      "valueSize": 1
+                    },
+                    {
+                      "declaration": 9,
+                      "isOffset": false,
+                      "isSlot": false,
+                      "src": "1508:11:0",
+                      "valueSize": 1
+                    }
+                  ],
+                  "id": 15,
+                  "nodeType": "InlineAssembly",
+                  "src": "1347:317:0"
+                }
+              ]
+            },
+            "id": 17,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "createClone",
+            "nameLocation": "1236:11:0",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 4,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 3,
+                  "mutability": "mutable",
+                  "name": "target",
+                  "nameLocation": "1256:6:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 17,
+                  "src": "1248:14:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 2,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1248:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1247:16:0"
+            },
+            "returnParameters": {
+              "id": 7,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 6,
+                  "mutability": "mutable",
+                  "name": "result",
+                  "nameLocation": "1290:6:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 17,
+                  "src": "1282:14:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 5,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1282:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1281:16:0"
+            },
+            "scope": 36,
+            "src": "1227:441:0",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 34,
+              "nodeType": "Block",
+              "src": "1756:536:0",
+              "statements": [
+                {
+                  "assignments": [
+                    27
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 27,
+                      "mutability": "mutable",
+                      "name": "targetBytes",
+                      "nameLocation": "1770:11:0",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 34,
+                      "src": "1762:19:0",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bytes20",
+                        "typeString": "bytes20"
+                      },
+                      "typeName": {
+                        "id": 26,
+                        "name": "bytes20",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "1762:7:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bytes20",
+                          "typeString": "bytes20"
+                        }
+                      },
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 32,
+                  "initialValue": {
+                    "arguments": [
+                      {
+                        "id": 30,
+                        "name": "target",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 19,
+                        "src": "1792:6:0",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      ],
+                      "id": 29,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "lValueRequested": false,
+                      "nodeType": "ElementaryTypeNameExpression",
+                      "src": "1784:7:0",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_type$_t_bytes20_$",
+                        "typeString": "type(bytes20)"
+                      },
+                      "typeName": {
+                        "id": 28,
+                        "name": "bytes20",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "1784:7:0",
+                        "typeDescriptions": {}
+                      }
+                    },
+                    "id": 31,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "typeConversion",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1784:15:0",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes20",
+                      "typeString": "bytes20"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "1762:37:0"
+                },
+                {
+                  "AST": {
+                    "nodeType": "YulBlock",
+                    "src": "1814:474:0",
+                    "statements": [
+                      {
+                        "nodeType": "YulVariableDeclaration",
+                        "src": "1822:24:0",
+                        "value": {
+                          "arguments": [
+                            {
+                              "kind": "number",
+                              "nodeType": "YulLiteral",
+                              "src": "1841:4:0",
+                              "type": "",
+                              "value": "0x40"
+                            }
+                          ],
+                          "functionName": {
+                            "name": "mload",
+                            "nodeType": "YulIdentifier",
+                            "src": "1835:5:0"
+                          },
+                          "nodeType": "YulFunctionCall",
+                          "src": "1835:11:0"
+                        },
+                        "variables": [
+                          {
+                            "name": "clone",
+                            "nodeType": "YulTypedName",
+                            "src": "1826:5:0",
+                            "type": ""
+                          }
+                        ]
+                      },
+                      {
+                        "expression": {
+                          "arguments": [
+                            {
+                              "name": "clone",
+                              "nodeType": "YulIdentifier",
+                              "src": "1860:5:0"
+                            },
+                            {
+                              "kind": "number",
+                              "nodeType": "YulLiteral",
+                              "src": "1867:66:0",
+                              "type": "",
+                              "value": "0x363d3d373d3d3d363d7300000000000000000000000000000000000000000000"
+                            }
+                          ],
+                          "functionName": {
+                            "name": "mstore",
+                            "nodeType": "YulIdentifier",
+                            "src": "1853:6:0"
+                          },
+                          "nodeType": "YulFunctionCall",
+                          "src": "1853:81:0"
+                        },
+                        "nodeType": "YulExpressionStatement",
+                        "src": "1853:81:0"
+                      },
+                      {
+                        "expression": {
+                          "arguments": [
+                            {
+                              "arguments": [
+                                {
+                                  "name": "clone",
+                                  "nodeType": "YulIdentifier",
+                                  "src": "1952:5:0"
+                                },
+                                {
+                                  "kind": "number",
+                                  "nodeType": "YulLiteral",
+                                  "src": "1959:3:0",
+                                  "type": "",
+                                  "value": "0xa"
+                                }
+                              ],
+                              "functionName": {
+                                "name": "add",
+                                "nodeType": "YulIdentifier",
+                                "src": "1948:3:0"
+                              },
+                              "nodeType": "YulFunctionCall",
+                              "src": "1948:15:0"
+                            },
+                            {
+                              "name": "targetBytes",
+                              "nodeType": "YulIdentifier",
+                              "src": "1965:11:0"
+                            }
+                          ],
+                          "functionName": {
+                            "name": "mstore",
+                            "nodeType": "YulIdentifier",
+                            "src": "1941:6:0"
+                          },
+                          "nodeType": "YulFunctionCall",
+                          "src": "1941:36:0"
+                        },
+                        "nodeType": "YulExpressionStatement",
+                        "src": "1941:36:0"
+                      },
+                      {
+                        "expression": {
+                          "arguments": [
+                            {
+                              "arguments": [
+                                {
+                                  "name": "clone",
+                                  "nodeType": "YulIdentifier",
+                                  "src": "1995:5:0"
+                                },
+                                {
+                                  "kind": "number",
+                                  "nodeType": "YulLiteral",
+                                  "src": "2002:4:0",
+                                  "type": "",
+                                  "value": "0x1e"
+                                }
+                              ],
+                              "functionName": {
+                                "name": "add",
+                                "nodeType": "YulIdentifier",
+                                "src": "1991:3:0"
+                              },
+                              "nodeType": "YulFunctionCall",
+                              "src": "1991:16:0"
+                            },
+                            {
+                              "kind": "number",
+                              "nodeType": "YulLiteral",
+                              "src": "2009:66:0",
+                              "type": "",
+                              "value": "0x5af43d82803e903d91602b57fd5bf30000000000000000000000000000000000"
+                            }
+                          ],
+                          "functionName": {
+                            "name": "mstore",
+                            "nodeType": "YulIdentifier",
+                            "src": "1984:6:0"
+                          },
+                          "nodeType": "YulFunctionCall",
+                          "src": "1984:92:0"
+                        },
+                        "nodeType": "YulExpressionStatement",
+                        "src": "1984:92:0"
+                      },
+                      {
+                        "nodeType": "YulVariableDeclaration",
+                        "src": "2084:29:0",
+                        "value": {
+                          "arguments": [
+                            {
+                              "name": "clone",
+                              "nodeType": "YulIdentifier",
+                              "src": "2101:5:0"
+                            },
+                            {
+                              "kind": "number",
+                              "nodeType": "YulLiteral",
+                              "src": "2108:4:0",
+                              "type": "",
+                              "value": "0x40"
+                            }
+                          ],
+                          "functionName": {
+                            "name": "add",
+                            "nodeType": "YulIdentifier",
+                            "src": "2097:3:0"
+                          },
+                          "nodeType": "YulFunctionCall",
+                          "src": "2097:16:0"
+                        },
+                        "variables": [
+                          {
+                            "name": "other",
+                            "nodeType": "YulTypedName",
+                            "src": "2088:5:0",
+                            "type": ""
+                          }
+                        ]
+                      },
+                      {
+                        "expression": {
+                          "arguments": [
+                            {
+                              "name": "query",
+                              "nodeType": "YulIdentifier",
+                              "src": "2132:5:0"
+                            },
+                            {
+                              "name": "other",
+                              "nodeType": "YulIdentifier",
+                              "src": "2139:5:0"
+                            },
+                            {
+                              "kind": "number",
+                              "nodeType": "YulLiteral",
+                              "src": "2146:1:0",
+                              "type": "",
+                              "value": "0"
+                            },
+                            {
+                              "kind": "number",
+                              "nodeType": "YulLiteral",
+                              "src": "2149:4:0",
+                              "type": "",
+                              "value": "0x2d"
+                            }
+                          ],
+                          "functionName": {
+                            "name": "extcodecopy",
+                            "nodeType": "YulIdentifier",
+                            "src": "2120:11:0"
+                          },
+                          "nodeType": "YulFunctionCall",
+                          "src": "2120:34:0"
+                        },
+                        "nodeType": "YulExpressionStatement",
+                        "src": "2120:34:0"
+                      },
+                      {
+                        "nodeType": "YulAssignment",
+                        "src": "2161:121:0",
+                        "value": {
+                          "arguments": [
+                            {
+                              "arguments": [
+                                {
+                                  "arguments": [
+                                    {
+                                      "name": "clone",
+                                      "nodeType": "YulIdentifier",
+                                      "src": "2193:5:0"
+                                    }
+                                  ],
+                                  "functionName": {
+                                    "name": "mload",
+                                    "nodeType": "YulIdentifier",
+                                    "src": "2187:5:0"
+                                  },
+                                  "nodeType": "YulFunctionCall",
+                                  "src": "2187:12:0"
+                                },
+                                {
+                                  "arguments": [
+                                    {
+                                      "name": "other",
+                                      "nodeType": "YulIdentifier",
+                                      "src": "2207:5:0"
+                                    }
+                                  ],
+                                  "functionName": {
+                                    "name": "mload",
+                                    "nodeType": "YulIdentifier",
+                                    "src": "2201:5:0"
+                                  },
+                                  "nodeType": "YulFunctionCall",
+                                  "src": "2201:12:0"
+                                }
+                              ],
+                              "functionName": {
+                                "name": "eq",
+                                "nodeType": "YulIdentifier",
+                                "src": "2184:2:0"
+                              },
+                              "nodeType": "YulFunctionCall",
+                              "src": "2184:30:0"
+                            },
+                            {
+                              "arguments": [
+                                {
+                                  "arguments": [
+                                    {
+                                      "arguments": [
+                                        {
+                                          "name": "clone",
+                                          "nodeType": "YulIdentifier",
+                                          "src": "2237:5:0"
+                                        },
+                                        {
+                                          "kind": "number",
+                                          "nodeType": "YulLiteral",
+                                          "src": "2244:3:0",
+                                          "type": "",
+                                          "value": "0xd"
+                                        }
+                                      ],
+                                      "functionName": {
+                                        "name": "add",
+                                        "nodeType": "YulIdentifier",
+                                        "src": "2233:3:0"
+                                      },
+                                      "nodeType": "YulFunctionCall",
+                                      "src": "2233:15:0"
+                                    }
+                                  ],
+                                  "functionName": {
+                                    "name": "mload",
+                                    "nodeType": "YulIdentifier",
+                                    "src": "2227:5:0"
+                                  },
+                                  "nodeType": "YulFunctionCall",
+                                  "src": "2227:22:0"
+                                },
+                                {
+                                  "arguments": [
+                                    {
+                                      "arguments": [
+                                        {
+                                          "name": "other",
+                                          "nodeType": "YulIdentifier",
+                                          "src": "2261:5:0"
+                                        },
+                                        {
+                                          "kind": "number",
+                                          "nodeType": "YulLiteral",
+                                          "src": "2268:3:0",
+                                          "type": "",
+                                          "value": "0xd"
+                                        }
+                                      ],
+                                      "functionName": {
+                                        "name": "add",
+                                        "nodeType": "YulIdentifier",
+                                        "src": "2257:3:0"
+                                      },
+                                      "nodeType": "YulFunctionCall",
+                                      "src": "2257:15:0"
+                                    }
+                                  ],
+                                  "functionName": {
+                                    "name": "mload",
+                                    "nodeType": "YulIdentifier",
+                                    "src": "2251:5:0"
+                                  },
+                                  "nodeType": "YulFunctionCall",
+                                  "src": "2251:22:0"
+                                }
+                              ],
+                              "functionName": {
+                                "name": "eq",
+                                "nodeType": "YulIdentifier",
+                                "src": "2224:2:0"
+                              },
+                              "nodeType": "YulFunctionCall",
+                              "src": "2224:50:0"
+                            }
+                          ],
+                          "functionName": {
+                            "name": "and",
+                            "nodeType": "YulIdentifier",
+                            "src": "2171:3:0"
+                          },
+                          "nodeType": "YulFunctionCall",
+                          "src": "2171:111:0"
+                        },
+                        "variableNames": [
+                          {
+                            "name": "result",
+                            "nodeType": "YulIdentifier",
+                            "src": "2161:6:0"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "evmVersion": "london",
+                  "externalReferences": [
+                    {
+                      "declaration": 21,
+                      "isOffset": false,
+                      "isSlot": false,
+                      "src": "2132:5:0",
+                      "valueSize": 1
+                    },
+                    {
+                      "declaration": 24,
+                      "isOffset": false,
+                      "isSlot": false,
+                      "src": "2161:6:0",
+                      "valueSize": 1
+                    },
+                    {
+                      "declaration": 27,
+                      "isOffset": false,
+                      "isSlot": false,
+                      "src": "1965:11:0",
+                      "valueSize": 1
+                    }
+                  ],
+                  "id": 33,
+                  "nodeType": "InlineAssembly",
+                  "src": "1805:483:0"
+                }
+              ]
+            },
+            "id": 35,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "isClone",
+            "nameLocation": "1681:7:0",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 22,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 19,
+                  "mutability": "mutable",
+                  "name": "target",
+                  "nameLocation": "1697:6:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 35,
+                  "src": "1689:14:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 18,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1689:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 21,
+                  "mutability": "mutable",
+                  "name": "query",
+                  "nameLocation": "1713:5:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 35,
+                  "src": "1705:13:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 20,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1705:7:0",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1688:31:0"
+            },
+            "returnParameters": {
+              "id": 25,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 24,
+                  "mutability": "mutable",
+                  "name": "result",
+                  "nameLocation": "1748:6:0",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 35,
+                  "src": "1743:11:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 23,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1743:4:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1742:13:0"
+            },
+            "scope": 36,
+            "src": "1672:620:0",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "internal"
+          }
+        ],
+        "scope": 37,
+        "src": "1200:1094:0",
+        "usedErrors": []
+      }
+    ],
+    "src": "0:2294:0"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.10+commit.fc410830.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.3",
+  "updatedAt": "2021-12-02T15:24:35.845Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}
